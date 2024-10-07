@@ -17,16 +17,16 @@
 
 <body>
     <ion-fab slot="fixed" vertical="top" horizontal="end">
-        <ion-fab-button color="danger" onclick="animation = false;toggleAnimation()" title="Pause animation" size="small">
+        <ion-fab-button color="danger" onclick="animation = false;toggleAnimation()" title="Pause animation" size="small" id="pause">
             <ion-icon name="pause-outline"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="success" onclick="animation = true;toggleAnimation()" title="Play animation" size="small">
+        <ion-fab-button color="success" onclick="animation = true;toggleAnimation()" title="Play animation" size="small" id="play">
             <ion-icon name="play-outline"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="warning" onclick="removeOrbit()" title="Remove Orbit" size="small">
+        <ion-fab-button color="warning" onclick="orbiter = false" title="Remove Orbit" size="small" id="stop">
             <ion-icon name="remove-outline"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="light" onclick="removeOrbit()" title="Add Orbit" size="small">
+        <ion-fab-button color="light" onclick="orbiter = true" title="Add Orbit" size="small" id="start">
             <ion-icon name="add-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
@@ -36,5 +36,12 @@
 </body>
 
 <script type="module" src="script.js"></script>
+<script type="module">
+    import { toggleAnimation, removeOrbit } from "./script.js"
 
+    document.getElementById("pause").addEventListener("click", toggleAnimation);
+    document.getElementById("play").addEventListener("click", toggleAnimation);
+    document.getElementById("stop").addEventListener("click", removeOrbit);
+    document.getElementById("start").addEventListener("click", removeOrbit);
+</script>
 </html>

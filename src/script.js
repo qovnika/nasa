@@ -55,7 +55,9 @@ function createOrbit(neo) {
   orbitLine.rotation.x = neo.i_deg; // Inclination
   orbitLine.rotation.z = neo.node_deg; // Longitude of ascending node
 
-  scene.add(orbitLine);
+  if (orbiter) {
+    scene.add(orbitLine);
+  }
   return orbitLine;
 }
 
@@ -124,9 +126,12 @@ function getData() {
   xhttp.onload = function () {
     neos = JSON.parse(this.responseText);
     neos.forEach(neo => {
-      // Create NEO and its orbit
 
-      const orbit = createOrbit(neo);
+      // Create NEO and its orbit
+      if (orbiter) {
+        const orbit = createOrbit(neo);
+        orbits.push(orbit);
+      }
       const neoObject = createNEO();
 
       // Set initial position of the NEO
@@ -137,7 +142,6 @@ function getData() {
 
       // Store both NEO and its parameters
       neoObjects.push({ mesh: neoObject, params: neo });
-      orbits.push(orbit);
     });
 
     animate();
@@ -158,11 +162,7 @@ pan.update()
 // Animation loop to move all NEOs along their orbits
 let time = 0;
 function animate() {
-  if (animation) {
     requestAnimationFrame(animate);
-  } else {
-    return;
-  }
 
   neoObjects.forEach(neoObj => {
     // Get the position of the NEO at the current time
@@ -173,7 +173,9 @@ function animate() {
   });
 
   // Increment time (arbitrary time step, adjust for smoother or faster animation)
-  time += 0.01;
+  if (animation) {
+    time += 0.01;
+  }
 
   // Render the scene
   renderer.render(scene, camera);
@@ -188,7 +190,7 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
 });
 
-function toggleAnimation() {
+export function toggleAnimation() {
   if (animation) {
     animation = false;
   } else {
@@ -197,12 +199,11 @@ function toggleAnimation() {
   animate();
 }
 
-function removeOrbit () {
+export function removeOrbit () {
   if (orbiter) {
-    scene.remove(orbitLine);
-    orbiter = !orbiter;
+    orbiter = false;
   } else {
-    scene.add(orbitLine);
-    orbiter = !orbiter;
+    orbiter = true;
   }
+  getData();
 }
