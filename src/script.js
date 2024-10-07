@@ -209,3 +209,9 @@ export function removeOrbit () {
   }
   getData();
 }
+
+export function zoom (val) {
+  alert(val);
+  camera.position.z = val;
+  pan.update()  
+}

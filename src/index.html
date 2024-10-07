@@ -20,7 +20,7 @@
         <ion-fab-button color="danger" onclick="animation = false;toggleAnimation()" title="Pause animation" size="small" id="pause">
             <ion-icon name="pause-outline"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="success" onclick="animation = true;toggleAnimation()" title="Play animation" size="small" id="play">
+        <ion-fab-button color="primary" onclick="animation = true;toggleAnimation()" title="Play animation" size="small" id="play">
             <ion-icon name="play-outline"></ion-icon>
         </ion-fab-button>
         <ion-fab-button color="warning" onclick="orbiter = false" title="Remove Orbit" size="small" id="stop">
@@ -32,16 +32,22 @@
     </ion-fab>
 <!--    <canvas id="three-canvas">
 
-    </canvas>-->
+    </canvas>
+    <div style="background-color: rgba(255, 255, 255, 0.4);position: absolute;z-index: 1;width:90%;margin: auto;padding: 0 20px 0 20px;">
+        <ion-range label-placement="stacked" label="" color="danger" id="pan" value="7" min="1" max="100"></ion-range>
+    </div>-->
 </body>
 
 <script type="module" src="script.js"></script>
 <script type="module">
-    import { toggleAnimation, removeOrbit } from "./script.js"
+    import { toggleAnimation, removeOrbit, zoom } from "./script.js"
 
     document.getElementById("pause").addEventListener("click", toggleAnimation);
     document.getElementById("play").addEventListener("click", toggleAnimation);
     document.getElementById("stop").addEventListener("click", removeOrbit);
     document.getElementById("start").addEventListener("click", removeOrbit);
+    if (document.getElementById("pan")) {
+        document.getElementById("pan").addEventListener("mouseup", zoom(document.getElementById("pan").value));
+    }
 </script>
 </html>
