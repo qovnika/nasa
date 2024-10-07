@@ -122,6 +122,8 @@ function getPositionAtTime(time, neo) {
 }
 
 function getData() {
+  scene.remove.apply(scene, scene.children);
+  scene.add(sun);
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
     neos = JSON.parse(this.responseText);
